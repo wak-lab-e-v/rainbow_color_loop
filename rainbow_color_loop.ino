@@ -1,6 +1,8 @@
 // Arduino Sketch for NeoPixel / WS2812 LEDs
 // cycle a rainbow over all led
- 
+//
+// based on sketch https://codebender.cc/sketch:57804
+//
 
 #include <Adafruit_NeoPixel.h>
 
