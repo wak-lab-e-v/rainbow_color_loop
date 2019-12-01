@@ -1,3 +1,7 @@
+// Arduino Sketch for NeoPixel / WS2812 LEDs
+// cycle a rainbow over all led
+ 
+
 #include <Adafruit_NeoPixel.h>
 
 const int ledPin = 3;         // set pin number  
@@ -11,7 +15,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(numLeds, ledPin, NEO_GRB + NEO_KHZ80
 
 void setup() {
   strip.begin();
-  strip.setBrightness(brightness); // 1/3 brightness
+  strip.setBrightness(brightness); 
 }
 
 //
