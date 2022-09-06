@@ -5,49 +5,65 @@
 //
 
 #include <Adafruit_NeoPixel.h>
-
+const int potPin = A1;    // select the input pin for the potentiometer
 const int ledPin = 6;         // set pin number  
-const int poti_in = A1;       // poti pin
-const int numLeds = 35;       // the number of the neopixel strip
-const int cycle_speed = 15;   // time in ms from color to color (0-256)
-int brightness = 80;          // the Brightness of all LEDs
-
-
+const int numLeds = 35;        // the number of the neopixel strip
+const int cycle_speed = 10; // time in ms from color to color (0-256)
 const int color_shift = 255 / numLeds;
+const int wait = 4+0; // speed 
+int brightness = 80;    // the Brightness of all LEDs
+int val = 0;       // variable to store the value coming from the sensor
+
+uint16_t i, j;
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(numLeds, ledPin, NEO_GRB + NEO_KHZ800);
 
 void setup() {
+  Serial.begin(9600);
+  pinMode(ledPin, OUTPUT);  // declare the ledPin as an OUTPUT
+
+  
   strip.begin();
-  strip.setBrightness(brightness); 
+
+
 }
 
 //
 // MAIN LOOP
 //
-void loop() {           
-  rainbow(cycle_speed);
-  delay(10); 
-}
+void loop() {    
+         
 
-// 
-// Rainbow Cycle
-//
-void rainbow(uint8_t wait) {
-  uint16_t i, j;
 
+  // Serial.println(brightness);
+  //Serial.print(" ");
+  
+
+
+  
   for(j=0; j<256; j++) {    // color loop
     
     for(i=0; i<strip.numPixels(); i++) {  // led loop   
       strip.setPixelColor(i, Wheel((i*color_shift+j) & 255)); // set 
     }
-    
-    brightness = analogRead(poti_in);
-    brightness = map(brightness, 0, 1200,0, 240);
-    strip.setBrightness(brightness);
+
+    brightness = analogRead(potPin);    // read the value from the sensor
+    Serial.println(brightness);
+    brightness = map(brightness, 20,800,0,255); 
+       if (brightness < 10) {  brightness = 0; }
+   if (brightness > 255) {  brightness = 255; }
+    Serial.println(brightness);
+    Serial.println(" ");
+    //brightness = val;
+    strip.setBrightness(brightness); 
+   
     strip.show();
     delay(wait);
   }
+
+
+
+  delay(1);
 }
 
 
